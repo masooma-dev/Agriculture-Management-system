@@ -1,9 +1,11 @@
 export const persistMiddleware = (store) => (next) => (action) => {
   const result = next(action)
   try {
-    localStorage.setItem('agri_crops', JSON.stringify(store.getState().crops))
+    const { crops, farms } = store.getState()
+    localStorage.setItem('agri_crops', JSON.stringify(crops))
+    localStorage.setItem('agri_farms', JSON.stringify(farms))
   } catch (e) {
-    console.warn('Could not save crops', e)
+    console.warn('Could not save data', e)
   }
   return result
 }
