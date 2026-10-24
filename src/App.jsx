@@ -9,6 +9,7 @@ import Buyers from './pages/Buyers';
 import Inventory from './pages/Inventory';
 import Reports from './pages/Reports';
 import Tasks from './pages/Tasks'
+import HarvestOrders from './pages/HarvestOrders';
 
 
 function Protected({ children }) {
@@ -26,7 +27,7 @@ export default function App() {
         <Route element={<Protected><Layout /></Protected>}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/crops" element={<Crops />} />
-          <Route path="/harvest-orders" element={<Dashboard />} />
+          <Route path="/harvest-orders" element={<HarvestOrders/>} />
           <Route path="/buyers" element={<Buyers />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/expenses" element={<Expenses />} />

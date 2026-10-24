@@ -1,7 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import cropReducer from './cropsSlice';
-import tasksReducer from'./tasksSlice';
-import expensesReducer from'./expensesSlice';
 import farmsReducer from './farmsSlice';
 import harvestsReducer from './harvestsSlice';
 import ordersReducer from './ordersSlice';
@@ -17,7 +15,7 @@ import { load } from './crud';
 import { persistMiddleware, activityLogger } from './middleware';
 
 export const store = configureStore({
-  reducer: { tasks:tasksReducer, expenses:expensesReducer, crops: cropReducer, farms: farmsReducer, harvests: harvestsReducer, orders: ordersReducer, buyers: buyersReducer,
+  reducer: { crops: cropReducer, farms: farmsReducer, harvests: harvestsReducer, orders: ordersReducer, buyers: buyersReducer,
     weather, tasks, expenses, inventory, auth, activity, ui },
   preloadedState: { crops: load('agri_crops'), farms: load('agri_farms'), harvests: load('agri_harvests'),
     orders: load('agri_orders'), buyers: load('agri_buyers') },
