@@ -12,6 +12,12 @@ import OrderForm from './components/OrderForm'
 import OrderList from './components/OrderList'
 import BuyerForm from './components/BuyerForm'
 import BuyerList from './components/BuyerList'
+import WeatherCard from './components/dashboard/WeatherCard'
+import CuttingSchedule from './components/dashboard/CuttingSchedule'
+import HarvestSummary from './components/harvest/HarvestSummary'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Login from './pages/Login'
+
 
 function App() {
   const crops = useSelector((state) => state.crops) || []
@@ -38,6 +44,9 @@ function App() {
       <main>
         <section className="dashboard">
           <h2>Dashboard</h2>
+          <WeatherCard />
+          <CuttingSchedule />
+          <HarvestSummary />
 <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
             <div className="card" style={{ flex: 1, padding: '16px' }}>
               Farms

@@ -1,51 +1,66 @@
-import useWeather from '../../hooks/useWeather'
 
-function humidityStatus(h) {
-  if (h < 30) return { label: 'Low', color: 'warning' }
-  if (h <= 60) return { label: 'Optimal', color: 'success' }
-  return { label: 'High', color: 'danger' }
-}
+import HumidityGauge from './HumidityGuage';const styles = {
+  card: {
+    background: "#eef4e6",
+    border: "1px solid #c9d9b4",
+    borderRadius: 12,
+    padding: "18px 20px",
+    maxWidth: 320,
+    color: "#2b3a1f",
+    fontFamily: "system-ui, sans-serif",
+  },
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "baseline",
+    marginBottom: 12,
+  },
+  city: { margin: 0, fontSize: 16, fontWeight: 600 },
+  condition: { margin: 0, fontSize: 13, color: "#5c6f48" },
+  temp: { fontSize: 44, fontWeight: 700, lineHeight: 1, margin: "4px 0 14px" },
+  stats: {
+    display: "grid",
+    gridTemplateColumns: "repeat(3, 1fr)",
+    gap: 8,
+    borderTop: "1px solid #c9d9b4",
+    paddingTop: 12,
+  },
+  statValue: { margin: 0, fontSize: 15, fontWeight: 600 },
+  statLabel: { margin: 0, fontSize: 12, color: "#5c6f48" },
+};
 
-export default function WeatherCard() {
-  const { data, loading, error, updated } = useWeather()
-
-  if (loading) return <div className="card p-3">Loading weather...</div>
-  if (error) return <div className="card p-3 text-danger">Error: {error}</div>
-
-  const c = data.current
-  const h = humidityStatus(c.relative_humidity_2m)
-
+function WeatherCard({
+  city = "Bhalwal",
+  temperature = 29,
+  condition = "Mostly cloudy",
+  humidity = 54,
+  wind = 12,
+  rainChance = 10,
+}) {
   return (
-    <div className="row g-3 mb-4">
-      <div className="col-md-6">
-        <div className="card p-3 h-100">
-          <h5>Live Weather</h5>
-          <h2>{c.temperature_2m}°C</h2>
-          <p className="mb-1">Wind: {c.wind_speed_10m} km/h</p>
-          <p className="mb-1">Rain chance: {data.daily.precipitation_probability_max[0]}%</p>
-          <small className="text-muted">Last updated: {updated}</small>
-        </div>
+    <div style={styles.card}>
+      <div style={styles.header}>
+        <h3 style={styles.city}>{city}</h3>
+        <p style={styles.condition}>{condition}</p>
       </div>
-      <div className="col-md-6">
-        <div className="card p-3 h-100">
-          <h5>Humidity</h5>
-          <h2>{c.relative_humidity_2m}%</h2>
-          <span className={`badge bg-${h.color}`}>{h.label}</span>
-          <div className="progress mt-2">
-            <div className={`progress-bar bg-${h.color}`} style={{ width: `${c.relative_humidity_2m}%` }}></div>
-          </div>
+
+      <p style={styles.temp}>{temperature}°C</p>
+
+      <div style={styles.stats}>
+        <div><HumidityGauge humidity={humidity} /></div>
+        <div>
+          <p style={styles.statValue}>{wind} km/h</p>
+          <p style={styles.statLabel}>Wind</p>
         </div>
-      </div>
-      <div className="col-12">
-        <div className="d-flex gap-2 flex-wrap">
-          {data.daily.time.map((d, i) => (
-            <div key={d} className="card p-2 text-center flex-fill">
-              <small>{d}</small>
-              <strong>{Math.round(data.daily.temperature_2m_max[i])}° / {Math.round(data.daily.temperature_2m_min[i])}°</strong>
-            </div>
-          ))}
+        <div>
+          <p style={styles.statValue}>{rainChance}%</p>
+          <p style={styles.statLabel}>Rain chance</p>
         </div>
-      </div>
-    </div>
-  )
+        </div>
+
+  </div>
+    
+  );
 }
+
+export default WeatherCard;
