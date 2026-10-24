@@ -1,20 +1,19 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+
+const load = () => {
+  try { return JSON.parse(localStorage.getItem('agri_expenses')) || []; } catch { return []; }
+};
 
 const expensesSlice = createSlice({
-  name: "expenses",
-  initialState: [],
+  name: 'expenses',
+  initialState: load(),
   reducers: {
-    add: {
-      reducer: (s, a) => { s.push(a.payload); },
-      prepare: (d) => ({ payload: { id: nanoid(), cropId: d.cropId,
-        category: d.category, amount: Number(d.amount), date: d.date, note: d.note || "" } }),
+    addExpense: (state, action) => {
+      state.push({ id: Date.now(), ...action.payload });
     },
-    update: (s, a) => {
-      const i = s.findIndex((e) => e.id === a.payload.id);
-      if (i !== -1) s[i] = { ...s[i], ...a.payload };
-    },
-    remove: (s, a) => s.filter((e) => e.id !== a.payload),
+    removeExpense: (state, action) => state.filter((e) => e.id !== action.payload),
   },
 });
-export const expenseActions = expensesSlice.actions;
+
+export const { addExpense, removeExpense } = expensesSlice.actions;
 export default expensesSlice.reducer;

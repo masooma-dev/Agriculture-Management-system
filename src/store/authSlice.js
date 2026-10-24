@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const USERS = [
   { id: 1, username: 'manager', password: 'manager123', name: 'Manager', role: 'manager' },
-  { id: 2, username: 'farmer', password: 'farmer123', name: 'Farmer', role: 'farmer' },
+  { id: 2, username: 'admin', password: 'admin123', name: 'Admin', role: 'admin' },
 ];
 
 const saved = localStorage.getItem('agri_user');

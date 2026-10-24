@@ -1,14 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const uiSlice = createSlice({
-  name: "ui",
-  initialState: { theme: "light", toast: null, sidebarOpen: true },
+  name: 'ui',
+  initialState: { theme: 'light', toast: null, sidebarOpen: true },
   reducers: {
-    toggleTheme: (s) => { s.theme = s.theme === "light" ? "dark" : "light"; },
-    showToast: (s, a) => { s.toast = a.payload; }, // {type:"success", message:"Saved"}
-    hideToast: (s) => { s.toast = null; },
-    toggleSidebar: (s) => { s.sidebarOpen = !s.sidebarOpen; },
+    toggleTheme: (state) => {
+      state.theme = state.theme === 'light' ? 'dark' : 'light';
+    },
+    setTheme: (state, action) => {
+      state.theme = action.payload;
+    },
+    showToast: (state, action) => {
+      state.toast = action.payload;
+    },
+    hideToast: (state) => {
+      state.toast = null;
+    },
+    toggleSidebar: (state) => {
+      state.sidebarOpen = !state.sidebarOpen;
+    },
   },
 });
-export const uiActions = uiSlice.actions;
+
+export const { toggleTheme, setTheme, showToast, hideToast, toggleSidebar } = uiSlice.actions;
 export default uiSlice.reducer;

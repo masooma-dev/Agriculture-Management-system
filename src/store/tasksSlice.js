@@ -1,20 +1,20 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-const tasksSlice = createSlice({
-  name: "tasks",
+const slice = createSlice({
+  name: 'tasks',
   initialState: [],
   reducers: {
-    add: {
-      reducer: (s, a) => { s.push(a.payload); },
-      prepare: (d) => ({ payload: { id: nanoid(), title: d.title, type: d.type,
-        cropId: d.cropId || "", dueDate: d.dueDate, status: "Pending" } }),
+    addTask: (state, action) => {
+      state.push({ id: Date.now(), status: 'Pending', ...action.payload });
     },
-    update: (s, a) => {
-      const i = s.findIndex((t) => t.id === a.payload.id);
-      if (i !== -1) s[i] = { ...s[i], ...a.payload };
+    setTaskStatus: (state, action) => {
+      const t = state.find((x) => x.id === action.payload.id);
+      if (t) t.status = action.payload.status;
     },
-    remove: (s, a) => s.filter((t) => t.id !== a.payload),
+    removeTask: (state, action) =>
+      state.filter((x) => x.id !== action.payload),
   },
 });
-export const taskActions = tasksSlice.actions;
-export default tasksSlice.reducer;
+
+export const { addTask, setTaskStatus, removeTask } = slice.actions;
+export default slice.reducer;
